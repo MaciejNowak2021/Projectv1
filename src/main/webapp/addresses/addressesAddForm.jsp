@@ -25,6 +25,14 @@
         <td>Numer domu:</td><td><form:input path="houseNumber"/><form:errors path="houseNumber"/> </td>
 
     </tr>
+       <tr>
+           <td>Miasto:</td><td><form:input path="city"/><form:errors path="city"/> </td>
+
+       </tr>
+       <tr>
+           <td>Kod pocztowy:</td><td><form:input path="zipCode"/><form:errors path="zipCode"/> </td>
+
+       </tr>
     <tr>
         <td>Typ mieszkania</td><td><form:input path="typeOfHouse"/><form:errors path="typeOfHouse"/> </td>
 

@@ -14,15 +14,22 @@
 <body>
 <%@ include file="/header.jsp" %>
 
-<h2>Twoje usterki:</h2><table border="solid">
-<c:forEach items="${order}" var="ord" varStatus="count" >
+<h2>Twoje usterki:</h2>
+<table border="solid">
+    <tr>
+        <td>Nr</td><td>Opis:</td><td>Status</td><td>Adres</td><td>Wykonawca:</td><td>Akcje:</td>
+    </tr>
+
+    <c:forEach items="${order}" var="ord" varStatus="count" >
 
 
         <tr>
-            <td>Nr</td><td>Opis:</td><td>Status</td><td>Adres</td><td>Wykonawca:</td><td>Akcje:</td>
-        </tr>
-        <tr>
-            <td>${count.count}</td><td>${ord.description}</td><td>${ord.status}</td><td>${ord.address.fullAddress}</td><td>${ord.user.fullName}</td><td><a href="http://localhost:8080/faultOrder/add?id=${ord.id}">Edytuj</a> </td>
+            <td>${count.count}</td>
+            <td>${ord.description}</td>
+            <td>${ord.status}</td>
+            <td><a href="https://www.google.com/maps/place/${ord.address.street}+${ord.address.houseNumber},+${ord.address.zipCode}+${ord.address.city}" target="_blank">${ord.address.fullAddress}</a> </td>
+            <td>${ord.user.fullName}</td>
+            <td><a href="http://localhost:8080/faultOrder/add?id=${ord.id}">Edytuj</a> </td>
         </tr>
 
 </c:forEach>

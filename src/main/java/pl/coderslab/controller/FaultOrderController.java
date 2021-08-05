@@ -52,8 +52,12 @@ public class FaultOrderController {
             model.addAttribute("addresses", addressesRepository.findAddressesByUser((User) principal));
             return "/faultOrder/faultOrderAddForm.jsp";
         }
-        faultOrder.setClient((User) principal);
-        faultOrderRepository.save(faultOrder);
+
+        FaultOrder faultOrder1 = faultOrderRepository.findById(faultOrder.getId()).get();
+        faultOrder1.setClient((User) principal);
+        faultOrder1.setAddress(faultOrder.getAddress());
+        faultOrder1.setDescription(faultOrder.getDescription());
+        faultOrderRepository.save(faultOrder1);
         return "redirect:/user/start";
     }
 
