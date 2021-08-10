@@ -8,15 +8,22 @@ public class Addresses {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
     private String street;
+
     @NotBlank
     private String houseNumber;
+
     private String zipCode;
+
     private String city;
+
     private String typeOfHouse;
+
     @ManyToOne
     private User user;
+
     @Transient
     String fullAddress;
 

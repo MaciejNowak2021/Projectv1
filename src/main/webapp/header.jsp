@@ -16,7 +16,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Witaj: ${user.firstName}</h1>
+<h1>Witaj: ${userName}</h1>
 <a href="http://localhost:8080/user/start">Moje usterki</a> ||
 <a href="http://localhost:8080/faultOrder/add?id=">Zgłoś usterkę</a> ||
 <a href="http://localhost:8080/addresses/add">Dodaj adres</a> ||

@@ -12,6 +12,7 @@
 </head>
 <body>
 <h2>Projekt końcowy</h2>
+<h4>Aplikacja zarządzające zleceniami.</h4>
 <a href="http://localhost:8080/user/add">Rejestracja</a>
 <a href="http://localhost:8080/login">Logowanie</a>
 </body>

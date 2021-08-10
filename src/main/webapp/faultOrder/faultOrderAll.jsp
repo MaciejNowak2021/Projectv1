@@ -13,15 +13,30 @@
 </head>
 <body>
 <%@ include file="/admin/header.jsp" %>
-<h2>Lista uterek:</h2><table border="solid">
+<h2>Lista uterek:</h2>
+<table border="solid">
+    <tr>
+        <td>ID:</td>
+        <td>Klient</td>
+        <td>Adres</td>
+        <td>Opis:</td>
+        <td>Status</td>
+        <td>Wykonawca:</td>
+        <td>Akcje:</td>
+    </tr>
     <c:forEach items="${faultOrder}" var="ord">
 
-
         <tr>
-            <td>ID:</td><td>Klient</td><td>Adres</td><td>Opis:</td><td>Status</td><td>Wykonawca:</td><td>Akcje:</td>
-        </tr>
-        <tr>
-            <td>${ord.id}</td><td>${ord.client.fullName}</td><td>${ord.address.fullAddress}</td><td>${ord.description}</td><td>${ord.status}</td><td>${ord.user.fullName}</td><td><a href="http://localhost:8080/faultOrder/update?id=${ord.id}">Edytuj</a> </td>
+            <td>${ord.id}</td>
+            <td><a href="http://localhost:8080/user/info?id=${ord.client.id}">${ord.client.fullName}</a></td>
+            <td>
+                <a href="https://www.google.com/maps/place/${ord.address.street}+${ord.address.houseNumber},+${ord.address.zipCode}+${ord.address.city}"
+                   target="_blank">${ord.address.fullAddress}</a></td>
+            <td>${ord.description}</td>
+            <td>${ord.status}</td>
+            <td>${ord.user.fullName}</td>
+            <td><a href="http://localhost:8080/faultOrder/update?id=${ord.id}">Edytuj</a> <a
+                    href="http://localhost:8080/faultOrder/delete?id=${ord.id}">Usuń</a></td>
         </tr>
 
     </c:forEach>

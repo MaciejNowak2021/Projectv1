@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Witaj: ${user.firstName}</h1>
+<h1>Witaj: ${userName}</h1>
 <a href="http://localhost:8080/faultOrder/all">Usterki</a> ||
 <a href="http://localhost:8080/admin/users">Lista pracowników</a> ||
 <a href="http://localhost:8080/user/add/user">Dodaj pracownika</a> ||

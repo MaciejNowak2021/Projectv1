@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
@@ -38,10 +37,10 @@ public class User implements UserDetails {
 
     private Integer phone;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
     private List<Addresses> addresses;
 
-    private String role = "CLIENT";
+    private String role = "ROLE_CLIENT";
 
     @Transient
     private String fullName;

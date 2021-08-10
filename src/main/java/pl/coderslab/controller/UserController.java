@@ -1,25 +1,20 @@
 package pl.coderslab.controller;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.http.SecurityHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.entity.Addresses;
 import pl.coderslab.entity.User;
-import pl.coderslab.repository.AddressesRepository;
 import pl.coderslab.repository.CompanyRepository;
 import pl.coderslab.repository.FaultOrderRepository;
 import pl.coderslab.repository.UserRepository;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
+
 
 @Controller
 @RequestMapping("/user")
@@ -37,39 +32,50 @@ public class UserController {
         this.faultOrderRepository = faultOrderRepository;
     }
 
+
     @ModelAttribute
     public void addAttribute(Model model) {
+        if (!SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+            User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            model.addAttribute("userName", principal.getFullName());
+        }
+
         model.addAttribute("companys", companyRepository.findAll());
+
     }
 
 
     @GetMapping("/add")
     public String clientAdd(Model model) {
+
         model.addAttribute("user", new User());
         return "/user/clientAddForm.jsp";
     }
 
     @PostMapping("/add")
     public String clientAddPost(@Valid User user, BindingResult result, Model model, HttpServletRequest request) {
+
         if (result.hasErrors()) {
             return "/user/clientAddForm.jsp";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         model.addAttribute("users", userRepository.findAll());
-        return "redirect:/login";
+        return "redirect:/user/start";
 
     }
 
     @GetMapping("/all")
     public String userAll(Model model) {
+
         model.addAttribute("users", userRepository.findAll());
         return "/user/userAll.jsp";
     }
 
     @GetMapping("/start")
     public String start(Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         model.addAttribute("user", principal);
         model.addAttribute("order", faultOrderRepository.findFaultOrdersByClient((User) principal));
@@ -86,13 +92,14 @@ public class UserController {
 
     @PostMapping("/add/user")
     public String userAddPost(@Valid User user, BindingResult result, Model model) {
+
         if (result.hasErrors()) {
             model.addAttribute("company", companyRepository.findAll());
             return "/user/userAddForm.jsp";
         }
-        if(userRepository.findUserByEmail(user.getEmail()).isPresent()){
+        if (userRepository.findUserByEmail(user.getEmail()).isPresent()) {
             model.addAttribute("company", companyRepository.findAll());
-            model.addAttribute("error","Użytkownik o podanym adresie email istnieje!");
+            model.addAttribute("error", "Użytkownik o podanym adresie email istnieje!");
             return "/user/userAddForm.jsp";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -101,6 +108,26 @@ public class UserController {
         model.addAttribute("users", userRepository.findAll());
         return "redirect:/admin/users";
 
+    }
+
+    @GetMapping("/role")
+    public String role() {
+
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal.getRole().equals("ROLE_ADMIN")) {
+            return "redirect:/admin/start";
+        }
+        return "redirect:/user/start";
+    }
+
+    @GetMapping("/info")
+    public String info(Model model, HttpServletRequest request) {
+
+        User user = userRepository.findById(Long.parseLong(request.getParameter("id"))).get();
+        Hibernate.initialize(user.getAddresses());
+        model.addAttribute("user", user);
+
+        return "/user/userInfo.jsp";
     }
 
 }

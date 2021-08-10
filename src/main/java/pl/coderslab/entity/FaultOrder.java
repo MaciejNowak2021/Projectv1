@@ -6,15 +6,20 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class FaultOrder {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
     private String description;
+
     @OneToOne
     private User client;
+
     @OneToOne
     private User user;
+
     @OneToOne
     private Addresses address;
     private String status = "Zgłoszone";

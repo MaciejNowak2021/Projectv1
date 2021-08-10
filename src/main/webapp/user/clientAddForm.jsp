@@ -18,19 +18,20 @@
     </style>
 </head>
 <body>
+<h3>Rejestracja</h3>
 <form:form modelAttribute="user">
     <table border="solid">
         <tr>
             <td>Imię:</td>
-            <td><form:input path="firstName"/> <form:errors path="firstName"/></td>
+            <td><form:input path="firstName"/> <br><form:errors path="firstName"/></td>
         </tr>
         <tr>
             <td>Nazwisko:</td>
-            <td><form:input path="lastName"/> <form:errors path="lastName"/></td>
+            <td><form:input path="lastName"/> <br><form:errors path="lastName"/></td>
         </tr>
         <tr>
             <td>Hasło:</td>
-            <td><form:password path="password"/> <form:errors path="password"/><form:errors path="lastName"/></td>
+            <td><form:password path="password"/><br> <form:errors path="password"/></td>
         </tr>
         <tr>
             <td>Email:</td>

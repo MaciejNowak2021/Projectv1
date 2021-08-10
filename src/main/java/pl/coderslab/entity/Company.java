@@ -10,11 +10,15 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Size(min = 3, message = "Nazwa firmy musi zawierać minimum 3 znaki.")
     private String name;
+
     @NIP
     private String nip;
+
     private Integer phone;
+
     @OneToOne
     private User owner;
 
