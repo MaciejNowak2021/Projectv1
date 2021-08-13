@@ -103,7 +103,7 @@ public class UserController {
             return "/user/userAddForm.jsp";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("USER");
+        user.setRole("ROLE_ADMIN");
         userRepository.save(user);
         model.addAttribute("users", userRepository.findAll());
         return "redirect:/admin/users";
